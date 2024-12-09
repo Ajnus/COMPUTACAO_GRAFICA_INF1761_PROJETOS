@@ -1,0 +1,35 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/celes/DI/CG/2022.2/codes/core/scenegraph'
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c arcball.cpp -o arcball.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c camera.cpp -o camera.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c cube.cpp -o cube.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c grid.cpp -o grid.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c error.cpp -o error.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c eyelight.cpp -o eyelight.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c light.cpp -o light.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c scene.cpp -o scene.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c shader.cpp -o shader.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c quad.cpp -o quad.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c material.cpp -o material.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c node.cpp -o node.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c objlight.cpp -o objlight.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c polyoffset.cpp -o polyoffset.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c sphere.cpp -o sphere.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c state.cpp -o state.o 
+ 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c texdepth.cpp -o texdepth.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c texture.cpp -o texture.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c transform.cpp -o transform.o 
+CC -I. -I/Users/celes/Work/include -I/opt/homebrew/include  -g -Wall -std=c++17 -DGL_SILENCE_DEPRECATION  -c main.cpp -o main.o 
+c++ -L.  -L/opt/homebrew/lib -o t arcball.o camera.o cube.o grid.o error.o eyelight.o light.o scene.o shader.o quad.o material.o node.o objlight.o polyoffset.o sphere.o state.o texdepth.o texture.o transform.o main.o  -lstdc++ -framework OpenGL -lglfw
+make: Leaving directory `/Users/celes/DI/CG/2022.2/codes/core/scenegraph'
+ 
