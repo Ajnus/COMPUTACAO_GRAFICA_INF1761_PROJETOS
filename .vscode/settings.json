@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "new": "cpp",
+        "*.ipp": "cpp",
+        "*.tcc": "cpp",
+        "format": "cpp",
+        "limits": "cpp",
+        "variant": "cpp"
+    }
+}
