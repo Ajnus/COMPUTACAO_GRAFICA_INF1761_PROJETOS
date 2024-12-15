@@ -27,8 +27,14 @@
 static float viewer_pos[3] = {2.0f, 3.5f, 4.0f};
 
 static ScenePtr scene;
+static ScenePtr reflector;
 static Camera3DPtr camera;
 static ArcballPtr arcball;
+static NodePtr tabuleiroNode;
+
+// Lista de peões para o tabuleiro
+static std::vector<NodePtr> Pawns;
+static NodePtr clockCubeNode;
 
 static void initialize(void)
 {
@@ -149,6 +155,10 @@ static void initialize(void)
   trfSwitchButtonBlackBottomCap->Translate(-27.0f, 12.0f, -6.4f);
   trfSwitchButtonBlackBottomCap->Rotate(90.0f, 1.0f, 0.0f, 0.0f);
 
+  TransformPtr trf_floor = Transform::Make();
+  trf_floor->Scale(8.0f, -1.1f, 3.0f);
+  // trf_floor->Translate(0.0f,-1.0f,0.0f);
+
   // --------------
 
   ShapePtr baseTabuleiro = Cube::Make();
@@ -161,6 +171,9 @@ static void initialize(void)
   Error::Check("after Quad::Make()");
 
   ShapePtr sphere = Sphere::Make();
+  Error::Check("after Sphere::Make()");
+
+  ShapePtr sphere1 = Sphere::Make();
   Error::Check("after Sphere::Make()");
 
   ShapePtr switchWhiteBase = Cylinder::Make();
@@ -193,6 +206,9 @@ static void initialize(void)
   ShapePtr switchButtonBlackBottomCap = Disk::Make();
   Error::Check("after Disk::Make()");
 
+  ShapePtr cube = Cube::Make();
+  Error::Check("after Cube::Make()");
+
   // Lista de nós para o tabuleiro
   std::vector<NodePtr> chessboardNodes;
 
@@ -222,9 +238,6 @@ static void initialize(void)
       }
     }
   }
-
-  // Lista de peões para o tabuleiro
-  std::vector<NodePtr> Pawns;
 
   float PawnBaseOffset = 3.75f;
   float PawnSphereOffset = 5.625f;
@@ -340,6 +353,11 @@ static void initialize(void)
   shd_clip->AttachFragmentShader("../../shaders/clipplane/fragment.glsl");
   shd_clip->Link();
 
+  ShaderPtr shd_reflect = Shader::Make(light, "world");
+  shd_reflect->AttachVertexShader("../../shaders/scene_reflect/vertex.glsl");
+  shd_reflect->AttachFragmentShader("../../shaders/scene_reflect/fragment.glsl");
+  shd_reflect->Link();
+
   // Fog parameters
   auto fcolor = Variable<glm::vec4>::Make("fcolor", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
   auto fdensity = Variable<float>::Make("fdensity", 0.060f);
@@ -357,11 +375,15 @@ static void initialize(void)
   // state->SetTexture(sphere_tex);
   // clipPlane->Load(state); // Carregue o plano de corte no estado
 
+
+// Objetos refletidos
+  tabuleiroNode = Node::Make(trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro});
+
   // build scene
   NodePtr root = Node::Make(shader,
                             {
                                 // Tabuleiro
-                                Node::Make(trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}),
+                                tabuleiroNode,
 
                                 // Casas do Tabuleiro
                                 Node::Make({white, matteGreen}, {chessboardNodes[0]}),
@@ -658,16 +680,107 @@ static void initialize(void)
                                 Node::Make(shd_tex, trfSwitchButtonBlackTopCap, {metalGray, wood_tex}, {switchButtonBlackTopCap}),
                                 Node::Make(shd_tex, trfSwitchButtonWhiteBottomCap, {metalGray, wood_tex}, {switchButtonWhiteBottomCap}),
                                 Node::Make(shd_tex, trfSwitchButtonBlackBottomCap, {metalGray, wood_tex}, {switchButtonBlackBottomCap}),
+
                             });
   scene = Scene::Make(root);
+  // reflector = Scene::Make(Node::Make({scene_reflect}, trf_floor, /*{clipplane},*/ {cube}));
+  // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}));
+  // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {clipPlane}, {baseTabuleiro}));
 }
 
 static void display(GLFWwindow *win)
 {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear window
+  /*glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   Error::Check("before render");
+  glEnable(GL_STENCIL_TEST);
+
+  // Draw floor
+  glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
+  glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+  glStencilMask(0xFF);            // Write to stencil buffer
+  glDepthMask(GL_FALSE);          // Don't write to depth buffer
+  glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
+  reflector->Render(camera);
+  glDisable(GL_CULL_FACE);
+
+  // Draw reflection
+  glEnable(GL_CULL_FACE);
+  glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
+  glStencilMask(0x00);              // Don't write anything to stencil buffer
+  glDepthMask(GL_TRUE);             // Write to depth buffer
+  NodePtr root = scene->GetRoot();
+  TransformPtr trf = Transform::Make();
+  trf->Scale(1.0f, -1.0f, 1.0f);
+  root->SetTransform(trf);
+  glFrontFace(GL_CW);
+
   scene->Render(camera);
-  Error::Check("after render");
+
+  glDisable(GL_STENCIL_TEST);
+
+  root->SetTransform(nullptr);
+  scene->Render(camera);
+  Error::Check("after render");*/
+
+  /*  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // desenha refletor no stencil
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_NEVER, 1, 0xFFFF);
+    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+    reflector->Render(camera);
+    // desenha cena refletida
+    glStencilFunc(GL_EQUAL, 1, 0xFFFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    // código para desenho da cena refletida
+    glDisable(GL_STENCIL_TEST);
+    // desenha cena
+    scene->Render(camera);
+    // desenha refletor
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    reflector->Render(camera);
+    glDisable(GL_BLEND);*/
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  // desenha cena refletida
+  NodePtr root = scene->GetRoot();
+  TransformPtr trf = Transform::Make();
+  trf->Scale(1.0f, -1.0f, 1.0f);
+  // tabuleiro->SetTransform(trf);
+  
+  for (auto &pawn : Pawns)
+  {
+    pawn->SetTransform(trf);
+  }
+
+  // Apply transformation to clock parts
+  clockCube->SetTransform(trf);
+  frontFace->SetTransform(trf);
+  clockWhiteDisk->SetTransform(trf);
+  clockBlackDisk->SetTransform(trf);
+  switchWhiteBase->SetTransform(trf);
+  switchWhiteButton->SetTransform(trf);
+  switchBlackBase->SetTransform(trf);
+  switchBlackButton->SetTransform(trf);
+  switchButtonWhiteTopCap->SetTransform(trf);
+  switchButtonBlackTopCap->SetTransform(trf);
+  switchButtonWhiteBottomCap->SetTransform(trf);
+  switchButtonBlackBottomCap->SetTransform(trf);
+
+  // Apply transformation to luminaria
+  sphere->SetTransform(trf);
+  
+  glFrontFace(GL_CW); // invert front face incidence
+  scene->Render(camera);
+  glFrontFace(GL_CCW); // restore front face incidence
+  tabuleiro->SetTransform(nullptr);
+  // desenha cena
+  scene->Render(camera);
+  // desenha refletor
+  /*  glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    reflector->Render(camera);
+    glDisable(GL_BLEND);*/
 }
 
 static void error(int code, const char *msg)
@@ -728,7 +841,7 @@ int main()
 
   glfwSetErrorCallback(error);
 
-  GLFWwindow *win = glfwCreateWindow(600, 400, "Cena 3D com técnicas de renderização", nullptr, nullptr);
+  GLFWwindow *win = glfwCreateWindow(600, 400, "Cena 3D com técnicas de renderização e/ou animação", nullptr, nullptr);
   glfwSetWindowAttrib(win, GLFW_FLOATING, GLFW_TRUE); // always on top
   glfwSetFramebufferSizeCallback(win, resize);        // resize callback
   glfwSetKeyCallback(win, keyboard);                  // keyboard callback
@@ -759,10 +872,10 @@ int main()
   if (mode)
   // Set the window position to cover the entire width of the monitor
   {
-    int windowWidth = mode->width;
-    int windowHeight = 565;
-    int xpos = 0;
-    int ypos = (mode->height - windowHeight) / 2 - 115;
+    int windowWidth = 600;  // mode->width / 2;
+    int windowHeight = 400; // 565;
+    int xpos = mode->width / 2 + 45;
+    int ypos = (mode->height - windowHeight) / 2 - 77;
     glfwSetWindowPos(win, xpos, ypos);
     glfwSetWindowSize(win, windowWidth, windowHeight);
   }
