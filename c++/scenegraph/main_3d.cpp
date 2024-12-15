@@ -754,12 +754,12 @@ static void display(GLFWwindow *win)
 
   tabuleiroNode->SetTransform(trf);
 
-  /* for (int i = 0; i < Pawns.size(); i += 3)
+  for (int i = 0; i < Pawns.size(); i++)
    {
      Pawns[i]->SetTransform(trf);
-     Pawns[i]->SetTransform(trf);
-     Pawns[i]->SetTransform(trf);
-   }*/
+     //Pawns[i]->SetTransform(trf);
+     //Pawns[i]->SetTransform(trf);
+   }
 
   // Apply transformation to clock parts
   /*  clockCube->SetTransform(trf);
@@ -772,7 +772,7 @@ static void display(GLFWwindow *win)
     switchBlackButton->SetTransform(trf);
     switchButtonWhiteTopCap->SetTransform(trf);
     switchButtonBlackTopCap->SetTransform(trf);
-    switchButtonWhiteBottomCap->SetTransform(trf);
+    switchButtonWhiteBottomCap->SetTransform(rf);
     switchButtonBlackBottomCap->SetTransform(trf);*/
 
   // Apply transformation to luminaria
@@ -784,10 +784,10 @@ static void display(GLFWwindow *win)
 
   tabuleiroNode->SetTransform(nullptr);
 
-  /*for (auto &pawn : Pawns)
+  for (auto &pawn : Pawns)
   {
     pawn->SetTransform(nullptr);
-  }*/
+  }
 
   //  desenha cena
   scene->Render(camera);
