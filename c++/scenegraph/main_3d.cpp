@@ -684,7 +684,7 @@ static void initialize(void)
   scene = Scene::Make(root);
   // reflector = Scene::Make(Node::Make({scene_reflect}, trf_floor, /*{clipplane},*/ {cube}));
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}));
-  // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {clipPlane}, {baseTabuleiro}));
+  reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {clipPlane}, {baseTabuleiro}));
 }
 
 static void display(GLFWwindow *win)
@@ -740,6 +740,7 @@ static void display(GLFWwindow *win)
     reflector->Render(camera);
     glDisable(GL_BLEND);*/
 
+  /*
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // desenha cena refletida
   // NodePtr root = scene->GetRoot();
@@ -778,7 +779,7 @@ static void display(GLFWwindow *win)
   // Apply transformation to luminaria
   // sphere->SetTransform(trf);
 
-  glFrontFace(GL_CW); // invert front face incidence
+  /*glFrontFace(GL_CW); // invert front face incidence
   scene->Render(camera);
   glFrontFace(GL_CCW); // restore front face incidence
 
@@ -796,6 +797,28 @@ static void display(GLFWwindow *win)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     reflector->Render(camera);
     glDisable(GL_BLEND);*/
+
+  // ----
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  // desenha cena refletida
+  NodePtr root = scene->GetRoot();
+  TransformPtr trf = Transform::Make();
+  trf->Scale(1.0f, -1.0f, 1.0f);
+  root->SetTransform(trf);
+  glFrontFace(GL_CW);
+  // invert front face incidence
+  scene->Render(camera);
+  glFrontFace(GL_CCW);
+  // restore front face incidence
+  root->SetTransform(nullptr);
+  // desenha cena
+  scene->Render(camera);
+  // desenha refletor
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  reflector->Render(camera);
+  glDisable(GL_BLEND);
 }
 
 static void error(int code, const char *msg)
