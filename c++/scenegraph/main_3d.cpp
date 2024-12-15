@@ -375,8 +375,7 @@ static void initialize(void)
   // state->SetTexture(sphere_tex);
   // clipPlane->Load(state); // Carregue o plano de corte no estado
 
-
-// Objetos refletidos
+  // Objetos refletidos
   tabuleiroNode = Node::Make(trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro});
 
   // build scene
@@ -743,38 +742,54 @@ static void display(GLFWwindow *win)
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   // desenha cena refletida
-  NodePtr root = scene->GetRoot();
+  // NodePtr root = scene->GetRoot();
+
+  // transformações
   TransformPtr trf = Transform::Make();
   trf->Scale(1.0f, -1.0f, 1.0f);
-  // tabuleiro->SetTransform(trf);
-  
-  for (auto &pawn : Pawns)
-  {
-    pawn->SetTransform(trf);
-  }
+  TransformPtr trfSphere = Transform::Make();
+  trfSphere->Scale(0.20f / 2, -0.20f / 2, 0.20f / 2);
+  TransformPtr trfBase = Transform::Make();
+  trfBase->Scale(0.30f / 2, -0.30f / 2, 0.30f / 2);
+
+  tabuleiroNode->SetTransform(trf);
+
+  /* for (int i = 0; i < Pawns.size(); i += 3)
+   {
+     Pawns[i]->SetTransform(trf);
+     Pawns[i]->SetTransform(trf);
+     Pawns[i]->SetTransform(trf);
+   }*/
 
   // Apply transformation to clock parts
-  clockCube->SetTransform(trf);
-  frontFace->SetTransform(trf);
-  clockWhiteDisk->SetTransform(trf);
-  clockBlackDisk->SetTransform(trf);
-  switchWhiteBase->SetTransform(trf);
-  switchWhiteButton->SetTransform(trf);
-  switchBlackBase->SetTransform(trf);
-  switchBlackButton->SetTransform(trf);
-  switchButtonWhiteTopCap->SetTransform(trf);
-  switchButtonBlackTopCap->SetTransform(trf);
-  switchButtonWhiteBottomCap->SetTransform(trf);
-  switchButtonBlackBottomCap->SetTransform(trf);
+  /*  clockCube->SetTransform(trf);
+    frontFace->SetTransform(trf);
+    clockWhiteDisk->SetTransform(trf);
+    clockBlackDisk->SetTransform(trf);
+    switchWhiteBase->SetTransform(trf);
+    switchWhiteButton->SetTransform(trf);
+    switchBlackBase->SetTransform(trf);
+    switchBlackButton->SetTransform(trf);
+    switchButtonWhiteTopCap->SetTransform(trf);
+    switchButtonBlackTopCap->SetTransform(trf);
+    switchButtonWhiteBottomCap->SetTransform(trf);
+    switchButtonBlackBottomCap->SetTransform(trf);*/
 
   // Apply transformation to luminaria
-  sphere->SetTransform(trf);
-  
+  // sphere->SetTransform(trf);
+
   glFrontFace(GL_CW); // invert front face incidence
   scene->Render(camera);
   glFrontFace(GL_CCW); // restore front face incidence
-  tabuleiro->SetTransform(nullptr);
-  // desenha cena
+
+  tabuleiroNode->SetTransform(nullptr);
+
+  /*for (auto &pawn : Pawns)
+  {
+    pawn->SetTransform(nullptr);
+  }*/
+
+  //  desenha cena
   scene->Render(camera);
   // desenha refletor
   /*  glEnable(GL_BLEND);
