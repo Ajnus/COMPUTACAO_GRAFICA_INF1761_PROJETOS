@@ -366,7 +366,7 @@ static void initialize(void)
       audiencePawns.push_back(Node::Make(trfPawnSphere, {crowdColor}, {pawnSphere}));
       audiencePawns.push_back(Node::Make(trfPawnDisk, {crowdColor}, {pawnDisk}));
       audiencePawns.push_back(Node::Make(trfPawnBase, {crowdColor}, {pawnBase}));
-      audiencePawns.push_back(Node::Make(trfCrowdShadow, {black}, {crowdShadow}));
+      audiencePawns.push_back(Node::Make(trfCrowdShadow, {dark_gray}, {crowdShadow}));
     }
   }
 
@@ -420,6 +420,13 @@ static void initialize(void)
 
   ShapePtr floor = Cube::Make();
   Error::Check("after Cube::Make()");
+
+  TransformPtr trfCrowdShadow = Transform::Make();
+  trfCrowdShadow->Scale(0.30f, 0.30f, 0.30f);
+  trfCrowdShadow->Translate(audienceOffsetX * audiencePawnBaseOffset, -1.51f, audienceOffsetZ * audiencePawnBaseOffset);
+  trfCrowdShadow->MultMatrix(sm);
+
+  ShapePtr crowdShadow = Sphere::Make();
 
   // NodePtr audienceFloorNode = Node::Make(trfAudienceFloor, {floorMaterial}, {floor});*/
 
@@ -548,246 +555,246 @@ static void initialize(void)
                                 Node::Make(shd_tex, {Pawns[47]}),
 
                                 // Platéia (+ Sombras)
-                                Node::Make(shader, {audiencePawns[0]}),
+                                Node::Make(shd_tex, {audiencePawns[0]}),
                                 Node::Make(shd_tex, {audiencePawns[1]}),
                                 Node::Make(shd_tex, {audiencePawns[2]}),
-                                Node::Make(shd_tex, {audiencePawns[3]}),
-                                Node::Make(shader, {audiencePawns[4]}),
+                                Node::Make(shader, {audiencePawns[3]}),
+                                Node::Make(shd_tex, {audiencePawns[4]}),
                                 Node::Make(shd_tex, {audiencePawns[5]}),
                                 Node::Make(shd_tex, {audiencePawns[6]}),
-                                Node::Make(shd_tex, {audiencePawns[7]}),
-                                Node::Make(shader, {audiencePawns[8]}),
+                                Node::Make(shader, {audiencePawns[7]}),
+                                Node::Make(shd_tex, {audiencePawns[8]}),
                                 Node::Make(shd_tex, {audiencePawns[9]}),
                                 Node::Make(shd_tex, {audiencePawns[10]}),
-                                Node::Make(shd_tex, {audiencePawns[11]}),
-                                Node::Make(shader, {audiencePawns[12]}),
+                                Node::Make(shader, {audiencePawns[11]}),
+                                Node::Make(shd_tex, {audiencePawns[12]}),
                                 Node::Make(shd_tex, {audiencePawns[13]}),
                                 Node::Make(shd_tex, {audiencePawns[14]}),
-                                Node::Make(shd_tex, {audiencePawns[15]}),
-                                Node::Make(shader, {audiencePawns[16]}),
+                                Node::Make(shader, {audiencePawns[15]}),
+                                Node::Make(shd_tex, {audiencePawns[16]}),
                                 Node::Make(shd_tex, {audiencePawns[17]}),
                                 Node::Make(shd_tex, {audiencePawns[18]}),
-                                Node::Make(shd_tex, {audiencePawns[19]}),
-                                Node::Make(shader, {audiencePawns[20]}),
+                                Node::Make(shader, {audiencePawns[19]}),
+                                Node::Make(shd_tex, {audiencePawns[20]}),
                                 Node::Make(shd_tex, {audiencePawns[21]}),
                                 Node::Make(shd_tex, {audiencePawns[22]}),
-                                Node::Make(shd_tex, {audiencePawns[23]}),
-                                Node::Make(shader, {audiencePawns[24]}),
+                                Node::Make(shader, {audiencePawns[23]}),
+                                Node::Make(shd_tex, {audiencePawns[24]}),
                                 Node::Make(shd_tex, {audiencePawns[25]}),
                                 Node::Make(shd_tex, {audiencePawns[26]}),
-                                Node::Make(shd_tex, {audiencePawns[27]}),
-                                Node::Make(shader, {audiencePawns[28]}),
+                                Node::Make(shader, {audiencePawns[27]}),
+                                Node::Make(shd_tex, {audiencePawns[28]}),
                                 Node::Make(shd_tex, {audiencePawns[29]}),
                                 Node::Make(shd_tex, {audiencePawns[30]}),
-                                Node::Make(shd_tex, {audiencePawns[31]}),
-                                Node::Make(shader, {audiencePawns[32]}),
+                                Node::Make(shader, {audiencePawns[31]}),
+                                Node::Make(shd_tex, {audiencePawns[32]}),
                                 Node::Make(shd_tex, {audiencePawns[33]}),
                                 Node::Make(shd_tex, {audiencePawns[34]}),
-                                Node::Make(shd_tex, {audiencePawns[35]}),
-                                Node::Make(shader, {audiencePawns[36]}),
+                                Node::Make(shader, {audiencePawns[35]}),
+                                Node::Make(shd_tex, {audiencePawns[36]}),
                                 Node::Make(shd_tex, {audiencePawns[37]}),
                                 Node::Make(shd_tex, {audiencePawns[38]}),
-                                Node::Make(shd_tex, {audiencePawns[39]}),
-                                Node::Make(shader, {audiencePawns[40]}),
+                                Node::Make(shader, {audiencePawns[39]}),
+                                Node::Make(shd_tex, {audiencePawns[40]}),
                                 Node::Make(shd_tex, {audiencePawns[41]}),
                                 Node::Make(shd_tex, {audiencePawns[42]}),
-                                Node::Make(shd_tex, {audiencePawns[43]}),
-                                Node::Make(shader, {audiencePawns[44]}),
+                                Node::Make(shader, {audiencePawns[43]}),
+                                Node::Make(shd_tex, {audiencePawns[44]}),
                                 Node::Make(shd_tex, {audiencePawns[45]}),
                                 Node::Make(shd_tex, {audiencePawns[46]}),
-                                Node::Make(shd_tex, {audiencePawns[47]}),
-                                Node::Make(shader, {audiencePawns[48]}),
+                                Node::Make(shader, {audiencePawns[47]}),
+                                Node::Make(shd_tex, {audiencePawns[48]}),
                                 Node::Make(shd_tex, {audiencePawns[49]}),
                                 Node::Make(shd_tex, {audiencePawns[50]}),
-                                Node::Make(shd_tex, {audiencePawns[51]}),
-                                Node::Make(shader, {audiencePawns[52]}),
+                                Node::Make(shader, {audiencePawns[51]}),
+                                Node::Make(shd_tex, {audiencePawns[52]}),
                                 Node::Make(shd_tex, {audiencePawns[53]}),
                                 Node::Make(shd_tex, {audiencePawns[54]}),
-                                Node::Make(shd_tex, {audiencePawns[55]}),
-                                Node::Make(shader, {audiencePawns[56]}),
+                                Node::Make(shader, {audiencePawns[55]}),
+                                Node::Make(shd_tex, {audiencePawns[56]}),
                                 Node::Make(shd_tex, {audiencePawns[57]}),
                                 Node::Make(shd_tex, {audiencePawns[58]}),
-                                Node::Make(shd_tex, {audiencePawns[59]}),
-                                Node::Make(shader, {audiencePawns[60]}),
+                                Node::Make(shader, {audiencePawns[59]}),
+                                Node::Make(shd_tex, {audiencePawns[60]}),
                                 Node::Make(shd_tex, {audiencePawns[61]}),
                                 Node::Make(shd_tex, {audiencePawns[62]}),
-                                Node::Make(shd_tex, {audiencePawns[63]}),
-                                Node::Make(shader, {audiencePawns[64]}),
+                                Node::Make(shader, {audiencePawns[63]}),
+                                Node::Make(shd_tex, {audiencePawns[64]}),
                                 Node::Make(shd_tex, {audiencePawns[65]}),
                                 Node::Make(shd_tex, {audiencePawns[66]}),
-                                Node::Make(shd_tex, {audiencePawns[67]}),
-                                Node::Make(shader, {audiencePawns[68]}),
+                                Node::Make(shader, {audiencePawns[67]}),
+                                Node::Make(shd_tex, {audiencePawns[68]}),
                                 Node::Make(shd_tex, {audiencePawns[69]}),
                                 Node::Make(shd_tex, {audiencePawns[70]}),
-                                Node::Make(shd_tex, {audiencePawns[71]}),
-                                Node::Make(shader, {audiencePawns[72]}),
+                                Node::Make(shader, {audiencePawns[71]}),
+                                Node::Make(shd_tex, {audiencePawns[72]}),
                                 Node::Make(shd_tex, {audiencePawns[73]}),
                                 Node::Make(shd_tex, {audiencePawns[74]}),
-                                Node::Make(shd_tex, {audiencePawns[75]}),
-                                Node::Make(shader, {audiencePawns[76]}),
+                                Node::Make(shader, {audiencePawns[75]}),
+                                Node::Make(shd_tex, {audiencePawns[76]}),
                                 Node::Make(shd_tex, {audiencePawns[77]}),
                                 Node::Make(shd_tex, {audiencePawns[78]}),
-                                Node::Make(shd_tex, {audiencePawns[79]}),
-                                Node::Make(shader, {audiencePawns[80]}),
+                                Node::Make(shader, {audiencePawns[79]}),
+                                Node::Make(shd_tex, {audiencePawns[80]}),
                                 Node::Make(shd_tex, {audiencePawns[81]}),
                                 Node::Make(shd_tex, {audiencePawns[82]}),
-                                Node::Make(shd_tex, {audiencePawns[83]}),
-                                Node::Make(shader, {audiencePawns[84]}),
+                                Node::Make(shader, {audiencePawns[83]}),
+                                Node::Make(shd_tex, {audiencePawns[84]}),
                                 Node::Make(shd_tex, {audiencePawns[85]}),
                                 Node::Make(shd_tex, {audiencePawns[86]}),
-                                Node::Make(shd_tex, {audiencePawns[87]}),
-                                Node::Make(shader, {audiencePawns[88]}),
+                                Node::Make(shader, {audiencePawns[87]}),
+                                Node::Make(shd_tex, {audiencePawns[88]}),
                                 Node::Make(shd_tex, {audiencePawns[89]}),
                                 Node::Make(shd_tex, {audiencePawns[90]}),
-                                Node::Make(shd_tex, {audiencePawns[91]}),
-                                Node::Make(shader, {audiencePawns[92]}),
+                                Node::Make(shader, {audiencePawns[91]}),
+                                Node::Make(shd_tex, {audiencePawns[92]}),
                                 Node::Make(shd_tex, {audiencePawns[93]}),
                                 Node::Make(shd_tex, {audiencePawns[94]}),
-                                Node::Make(shd_tex, {audiencePawns[95]}),
-                                Node::Make(shader, {audiencePawns[96]}),
+                                Node::Make(shader, {audiencePawns[95]}),
+                                Node::Make(shd_tex, {audiencePawns[96]}),
                                 Node::Make(shd_tex, {audiencePawns[97]}),
                                 Node::Make(shd_tex, {audiencePawns[98]}),
-                                Node::Make(shd_tex, {audiencePawns[99]}),
-                                Node::Make(shader, {audiencePawns[100]}),
+                                Node::Make(shader, {audiencePawns[99]}),
+                                Node::Make(shd_tex, {audiencePawns[100]}),
                                 Node::Make(shd_tex, {audiencePawns[101]}),
                                 Node::Make(shd_tex, {audiencePawns[102]}),
-                                Node::Make(shd_tex, {audiencePawns[103]}),
-                                Node::Make(shader, {audiencePawns[104]}),
+                                Node::Make(shader, {audiencePawns[103]}),
+                                Node::Make(shd_tex, {audiencePawns[104]}),
                                 Node::Make(shd_tex, {audiencePawns[105]}),
                                 Node::Make(shd_tex, {audiencePawns[106]}),
-                                Node::Make(shd_tex, {audiencePawns[107]}),
-                                Node::Make(shader, {audiencePawns[108]}),
+                                Node::Make(shader, {audiencePawns[107]}),
+                                Node::Make(shd_tex, {audiencePawns[108]}),
                                 Node::Make(shd_tex, {audiencePawns[109]}),
                                 Node::Make(shd_tex, {audiencePawns[110]}),
-                                Node::Make(shd_tex, {audiencePawns[111]}),
-                                Node::Make(shader, {audiencePawns[112]}),
+                                Node::Make(shader, {audiencePawns[111]}),
+                                Node::Make(shd_tex, {audiencePawns[112]}),
                                 Node::Make(shd_tex, {audiencePawns[113]}),
                                 Node::Make(shd_tex, {audiencePawns[114]}),
-                                Node::Make(shd_tex, {audiencePawns[115]}),
-                                Node::Make(shader, {audiencePawns[116]}),
+                                Node::Make(shader, {audiencePawns[115]}),
+                                Node::Make(shd_tex, {audiencePawns[116]}),
                                 Node::Make(shd_tex, {audiencePawns[117]}),
                                 Node::Make(shd_tex, {audiencePawns[118]}),
-                                Node::Make(shd_tex, {audiencePawns[119]}),
-                                Node::Make(shader, {audiencePawns[120]}),
+                                Node::Make(shader, {audiencePawns[119]}),
+                                Node::Make(shd_tex, {audiencePawns[120]}),
                                 Node::Make(shd_tex, {audiencePawns[121]}),
                                 Node::Make(shd_tex, {audiencePawns[122]}),
-                                Node::Make(shd_tex, {audiencePawns[123]}),
-                                Node::Make(shader, {audiencePawns[124]}),
+                                Node::Make(shader, {audiencePawns[123]}),
+                                Node::Make(shd_tex, {audiencePawns[124]}),
                                 Node::Make(shd_tex, {audiencePawns[125]}),
                                 Node::Make(shd_tex, {audiencePawns[126]}),
-                                Node::Make(shd_tex, {audiencePawns[127]}),
-                                Node::Make(shader, {audiencePawns[128]}),
+                                Node::Make(shader, {audiencePawns[127]}),
+                                Node::Make(shd_tex, {audiencePawns[128]}),
                                 Node::Make(shd_tex, {audiencePawns[129]}),
                                 Node::Make(shd_tex, {audiencePawns[130]}),
-                                Node::Make(shd_tex, {audiencePawns[131]}),
-                                Node::Make(shader, {audiencePawns[132]}),
+                                Node::Make(shader, {audiencePawns[131]}),
+                                Node::Make(shd_tex, {audiencePawns[132]}),
                                 Node::Make(shd_tex, {audiencePawns[133]}),
                                 Node::Make(shd_tex, {audiencePawns[134]}),
-                                Node::Make(shd_tex, {audiencePawns[135]}),
-                                Node::Make(shader, {audiencePawns[136]}),
+                                Node::Make(shader, {audiencePawns[135]}),
+                                Node::Make(shd_tex, {audiencePawns[136]}),
                                 Node::Make(shd_tex, {audiencePawns[137]}),
                                 Node::Make(shd_tex, {audiencePawns[138]}),
-                                Node::Make(shd_tex, {audiencePawns[139]}),
-                                Node::Make(shader, {audiencePawns[140]}),
+                                Node::Make(shader, {audiencePawns[139]}),
+                                Node::Make(shd_tex, {audiencePawns[140]}),
                                 Node::Make(shd_tex, {audiencePawns[141]}),
                                 Node::Make(shd_tex, {audiencePawns[142]}),
-                                Node::Make(shd_tex, {audiencePawns[143]}),
-                                Node::Make(shader, {audiencePawns[144]}),
+                                Node::Make(shader, {audiencePawns[143]}),
+                                Node::Make(shd_tex, {audiencePawns[144]}),
                                 Node::Make(shd_tex, {audiencePawns[145]}),
                                 Node::Make(shd_tex, {audiencePawns[146]}),
-                                Node::Make(shd_tex, {audiencePawns[147]}),
-                                Node::Make(shader, {audiencePawns[148]}),
+                                Node::Make(shader, {audiencePawns[147]}),
+                                Node::Make(shd_tex, {audiencePawns[148]}),
                                 Node::Make(shd_tex, {audiencePawns[149]}),
                                 Node::Make(shd_tex, {audiencePawns[150]}),
-                                Node::Make(shd_tex, {audiencePawns[151]}),
-                                Node::Make(shader, {audiencePawns[152]}),
+                                Node::Make(shader, {audiencePawns[151]}),
+                                Node::Make(shd_tex, {audiencePawns[152]}),
                                 Node::Make(shd_tex, {audiencePawns[153]}),
                                 Node::Make(shd_tex, {audiencePawns[154]}),
-                                Node::Make(shd_tex, {audiencePawns[155]}),
-                                Node::Make(shader, {audiencePawns[156]}),
+                                Node::Make(shader, {audiencePawns[155]}),
+                                Node::Make(shd_tex, {audiencePawns[156]}),
                                 Node::Make(shd_tex, {audiencePawns[157]}),
                                 Node::Make(shd_tex, {audiencePawns[158]}),
-                                Node::Make(shd_tex, {audiencePawns[159]}),
-                                Node::Make(shader, {audiencePawns[160]}),
+                                Node::Make(shader, {audiencePawns[159]}),
+                                Node::Make(shd_tex, {audiencePawns[160]}),
                                 Node::Make(shd_tex, {audiencePawns[161]}),
                                 Node::Make(shd_tex, {audiencePawns[162]}),
-                                Node::Make(shd_tex, {audiencePawns[163]}),
-                                Node::Make(shader, {audiencePawns[164]}),
+                                Node::Make(shader, {audiencePawns[163]}),
+                                Node::Make(shd_tex, {audiencePawns[164]}),
                                 Node::Make(shd_tex, {audiencePawns[165]}),
                                 Node::Make(shd_tex, {audiencePawns[166]}),
-                                Node::Make(shd_tex, {audiencePawns[167]}),
-                                Node::Make(shader, {audiencePawns[168]}),
+                                Node::Make(shader, {audiencePawns[167]}),
+                                Node::Make(shd_tex, {audiencePawns[168]}),
                                 Node::Make(shd_tex, {audiencePawns[169]}),
                                 Node::Make(shd_tex, {audiencePawns[170]}),
-                                Node::Make(shd_tex, {audiencePawns[171]}),
-                                Node::Make(shader, {audiencePawns[172]}),
+                                Node::Make(shader, {audiencePawns[171]}),
+                                Node::Make(shd_tex, {audiencePawns[172]}),
                                 Node::Make(shd_tex, {audiencePawns[173]}),
                                 Node::Make(shd_tex, {audiencePawns[174]}),
-                                Node::Make(shd_tex, {audiencePawns[175]}),
-                                Node::Make(shader, {audiencePawns[176]}),
+                                Node::Make(shader, {audiencePawns[175]}),
+                                Node::Make(shd_tex, {audiencePawns[176]}),
                                 Node::Make(shd_tex, {audiencePawns[177]}),
                                 Node::Make(shd_tex, {audiencePawns[178]}),
-                                Node::Make(shd_tex, {audiencePawns[179]}),
-                                Node::Make(shader, {audiencePawns[180]}),
+                                Node::Make(shader, {audiencePawns[179]}),
+                                Node::Make(shd_tex, {audiencePawns[180]}),
                                 Node::Make(shd_tex, {audiencePawns[181]}),
                                 Node::Make(shd_tex, {audiencePawns[182]}),
-                                Node::Make(shd_tex, {audiencePawns[183]}),
-                                Node::Make(shader, {audiencePawns[184]}),
+                                Node::Make(shader, {audiencePawns[183]}),
+                                Node::Make(shd_tex, {audiencePawns[184]}),
                                 Node::Make(shd_tex, {audiencePawns[185]}),
                                 Node::Make(shd_tex, {audiencePawns[186]}),
-                                Node::Make(shd_tex, {audiencePawns[187]}),
-                                Node::Make(shader, {audiencePawns[188]}),
+                                Node::Make(shader, {audiencePawns[187]}),
+                                Node::Make(shd_tex, {audiencePawns[188]}),
                                 Node::Make(shd_tex, {audiencePawns[189]}),
                                 Node::Make(shd_tex, {audiencePawns[190]}),
-                                Node::Make(shd_tex, {audiencePawns[191]}),
-                                Node::Make(shader, {audiencePawns[192]}),
+                                Node::Make(shader, {audiencePawns[191]}),
+                                Node::Make(shd_tex, {audiencePawns[192]}),
                                 Node::Make(shd_tex, {audiencePawns[193]}),
                                 Node::Make(shd_tex, {audiencePawns[194]}),
-                                Node::Make(shd_tex, {audiencePawns[195]}),
-                                Node::Make(shader, {audiencePawns[196]}),
+                                Node::Make(shader, {audiencePawns[195]}),
+                                Node::Make(shd_tex, {audiencePawns[196]}),
                                 Node::Make(shd_tex, {audiencePawns[197]}),
                                 Node::Make(shd_tex, {audiencePawns[198]}),
-                                Node::Make(shd_tex, {audiencePawns[199]}),
-                                Node::Make(shader, {audiencePawns[200]}),
+                                Node::Make(shader, {audiencePawns[199]}),
+                                Node::Make(shd_tex, {audiencePawns[200]}),
                                 Node::Make(shd_tex, {audiencePawns[201]}),
                                 Node::Make(shd_tex, {audiencePawns[202]}),
-                                Node::Make(shd_tex, {audiencePawns[203]}),
-                                Node::Make(shader, {audiencePawns[204]}),
+                                Node::Make(shader, {audiencePawns[203]}),
+                                Node::Make(shd_tex, {audiencePawns[204]}),
                                 Node::Make(shd_tex, {audiencePawns[205]}),
                                 Node::Make(shd_tex, {audiencePawns[206]}),
-                                Node::Make(shd_tex, {audiencePawns[207]}),
-                                Node::Make(shader, {audiencePawns[208]}),
+                                Node::Make(shader, {audiencePawns[207]}),
+                                Node::Make(shd_tex, {audiencePawns[208]}),
                                 Node::Make(shd_tex, {audiencePawns[209]}),
                                 Node::Make(shd_tex, {audiencePawns[210]}),
-                                Node::Make(shd_tex, {audiencePawns[211]}),
-                                Node::Make(shader, {audiencePawns[212]}),
+                                Node::Make(shader, {audiencePawns[211]}),
+                                Node::Make(shd_tex, {audiencePawns[212]}),
                                 Node::Make(shd_tex, {audiencePawns[213]}),
                                 Node::Make(shd_tex, {audiencePawns[214]}),
-                                Node::Make(shd_tex, {audiencePawns[215]}),
-                                Node::Make(shader, {audiencePawns[216]}),
+                                Node::Make(shader, {audiencePawns[215]}),
+                                Node::Make(shd_tex, {audiencePawns[216]}),
                                 Node::Make(shd_tex, {audiencePawns[217]}),
                                 Node::Make(shd_tex, {audiencePawns[218]}),
-                                Node::Make(shd_tex, {audiencePawns[219]}),
-                                Node::Make(shader, {audiencePawns[220]}),
+                                Node::Make(shader, {audiencePawns[219]}),
+                                Node::Make(shd_tex, {audiencePawns[220]}),
                                 Node::Make(shd_tex, {audiencePawns[221]}),
                                 Node::Make(shd_tex, {audiencePawns[222]}),
-                                Node::Make(shd_tex, {audiencePawns[223]}),
-                                Node::Make(shader, {audiencePawns[224]}),
+                                Node::Make(shader, {audiencePawns[223]}),
+                                Node::Make(shd_tex, {audiencePawns[224]}),
                                 Node::Make(shd_tex, {audiencePawns[225]}),
                                 Node::Make(shd_tex, {audiencePawns[226]}),
-                                Node::Make(shd_tex, {audiencePawns[227]}),
-                                Node::Make(shader, {audiencePawns[228]}),
+                                Node::Make(shader, {audiencePawns[227]}),
+                                Node::Make(shd_tex, {audiencePawns[228]}),
                                 Node::Make(shd_tex, {audiencePawns[229]}),
                                 Node::Make(shd_tex, {audiencePawns[230]}),
-                                Node::Make(shd_tex, {audiencePawns[231]}),
-                                Node::Make(shader, {audiencePawns[232]}),
+                                Node::Make(shader, {audiencePawns[231]}),
+                                Node::Make(shd_tex, {audiencePawns[232]}),
                                 Node::Make(shd_tex, {audiencePawns[233]}),
                                 Node::Make(shd_tex, {audiencePawns[234]}),
-                                Node::Make(shd_tex, {audiencePawns[235]}),
-                                Node::Make(shader, {audiencePawns[236]}),
+                                Node::Make(shader, {audiencePawns[235]}),
+                                Node::Make(shd_tex, {audiencePawns[236]}),
                                 Node::Make(shd_tex, {audiencePawns[237]}),
                                 Node::Make(shd_tex, {audiencePawns[238]}),
-                                Node::Make(shd_tex, {audiencePawns[239]}),
+                                Node::Make(shader, {audiencePawns[239]}),
 
                                 // Fog
                                 Node::Make(shd_tex, trfFog, {fcolor, fdensity}),
@@ -816,7 +823,7 @@ static void initialize(void)
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, /*{clipPlane},*/ {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shader}, trf1, {clipPlane}, {floor}));
   reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
-  // sombra = Scene::Make(Node::Make(shader, trf_sombra1, {white}, {sombra1}));
+  sombra = Scene::Make(Node::Make(shader, trfCrowdShadow, {dark_gray}, {crowdShadow}));
   //  chao = Scene::Make(Node::Make(shader, trfAudienceFloor, {floorMaterial}, {floor}));
   chao = Scene::Make(Node::Make(shader, trfAudienceFloor, {matteGray}, {floor}));
 }
@@ -994,41 +1001,41 @@ static void display(GLFWwindow *win)
 
   // ------
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glEnable(GL_STENCIL_TEST);
+  /*  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_STENCIL_TEST);
 
-  // Floor
-  glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
-  glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-  glStencilMask(0xFF);            // Write to stencil buffer
-  glDepthMask(GL_FALSE);          // Don't write to depth buffer
-  glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
-  reflector->Render(camera);
-  glDisable(GL_CULL_FACE);
+    // Floor
+    glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
+    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+    glStencilMask(0xFF);            // Write to stencil buffer
+    glDepthMask(GL_FALSE);          // Don't write to depth buffer
+    glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
+    reflector->Render(camera);
+    glDisable(GL_CULL_FACE);
 
-  // Cube reflection
-  // glEnable(GL_CULL_FACE);
-  glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
-  glStencilMask(0x00);              // Don't write anything to stencil buffer
-  glDepthMask(GL_TRUE);             // Write to depth buffer
-  NodePtr root = scene->GetRoot();
-  TransformPtr trf = Transform::Make();
-  trf->Scale(1.0f, -1.0f, 1.0f);
-  root->SetTransform(trf);
-  glFrontFace(GL_CW);
+    // Cube reflection
+    // glEnable(GL_CULL_FACE);
+    glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
+    glStencilMask(0x00);              // Don't write anything to stencil buffer
+    glDepthMask(GL_TRUE);             // Write to depth buffer
+    NodePtr root = scene->GetRoot();
+    TransformPtr trf = Transform::Make();
+    trf->Scale(1.0f, -1.0f, 1.0f);
+    root->SetTransform(trf);
+    glFrontFace(GL_CW);
 
-  scene->Render(camera);
-  glFrontFace(GL_CCW); // restore front face incidence
-  root->SetTransform(nullptr);
+    scene->Render(camera);
+    glFrontFace(GL_CCW); // restore front face incidence
+    root->SetTransform(nullptr);
 
-  glStencilFunc(GL_EQUAL, 1, 0xFFFF);
-  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    glStencilFunc(GL_EQUAL, 1, 0xFFFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 
-  glDisable(GL_STENCIL_TEST);
+    glDisable(GL_STENCIL_TEST);
 
-  root->SetTransform(nullptr);
-  scene->Render(camera);
-
+    root->SetTransform(nullptr);
+    scene->Render(camera);
+  */
   // ------
   /*  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear window
 
@@ -1058,7 +1065,7 @@ static void display(GLFWwindow *win)
   // glClearStencil(0);
   // glClear(GL_STENCIL_BUFFER_BIT);
 
-  chao->Render(camera);
+  // chao->Render(camera);
 
   // glEnable(GL_STENCIL_TEST);
   // glStencilFunc(GL_NEVER, 1, 0xFFFF);
@@ -1075,6 +1082,55 @@ static void display(GLFWwindow *win)
   // glDepthFunc(GL_LESS);
   // glDisable(GL_STENCIL_TEST);
   // glDisable(GL_BLEND);
+
+  // ------
+
+  glClearStencil(0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear window
+
+  // reflector
+  glEnable(GL_STENCIL_TEST);
+  glStencilFunc(GL_NEVER, 1, 0xFFFF);
+  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+  reflector->Render(camera);
+
+  glStencilFunc(GL_EQUAL, 1, 0xFFFF);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+  NodePtr root = scene->GetRoot();
+  TransformPtr trf = Transform::Make();
+  trf->Scale(1.0f, -1.0f, 1.0f);
+  root->SetTransform(trf);
+  glFrontFace(GL_CW);
+  scene->Render(camera);
+  glDisable(GL_STENCIL_TEST);
+  glFrontFace(GL_CCW);
+  root->SetTransform(nullptr);
+  scene->Render(camera);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  reflector->Render(camera);
+  glDisable(GL_BLEND);
+
+  glClearStencil(0);
+  glClear(GL_STENCIL_BUFFER_BIT);
+
+  glEnable(GL_STENCIL_TEST);
+  glStencilFunc(GL_NEVER, 1, 0xFFFF);
+  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+
+  sombra->Render(camera);
+
+  glStencilFunc(GL_EQUAL, 0, 0xFFFF);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+  glBlendFunc(GL_ONE, GL_ONE);
+  glEnable(GL_BLEND);
+  glDepthFunc(GL_EQUAL);
+
+  chao->Render(camera);
+
+  glDisable(GL_STENCIL_TEST);
+  glDepthFunc(GL_LESS);
+  glDisable(GL_BLEND);
 }
 
 static void error(int code, const char *msg)
