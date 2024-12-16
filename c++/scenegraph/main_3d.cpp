@@ -21,6 +21,7 @@
 #include "clipplane.h"
 #include <cstdlib>
 #include <ctime>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
@@ -35,6 +36,20 @@ static NodePtr tabuleiroNode;
 // Lista de peões para o tabuleiro
 static std::vector<NodePtr> Pawns;
 static NodePtr clockCubeNode;
+
+static ScenePtr sombra;
+static ScenePtr chao;
+
+// Montagem da matriz de projeção (sombra)
+static glm::mat4 shadowMatrix(const glm::vec4 &n, const glm::vec4 &l)
+{
+  float ndotl = glm::dot(glm::vec3(n), glm::vec3(l));
+  return glm::mat4(
+      glm::vec4(ndotl + n.w - l.x * n.x, -l.y * n.x, -l.z * n.x, 0.0f),
+      glm::vec4(-l.x * n.y, ndotl + n.w - l.y * n.y, -l.z * n.y, 0.0f),
+      glm::vec4(-l.x * n.z, -l.y * n.z, ndotl + n.w - l.z * n.z, 0.0f),
+      glm::vec4(-l.x * n.w, -l.y * n.w, -l.z * n.w, ndotl));
+}
 
 static void initialize(void)
 {
@@ -160,6 +175,10 @@ static void initialize(void)
   trf_floor->Scale(8.0f, 0.0f, 3.0f);
   // trf_floor->Translate(0.0f,-1.0f,0.0f);
 
+  TransformPtr trf4 = Transform::Make();
+  trf4->Scale(3.0f, 0.001f, 3.0f);
+  trf4->Translate(-0.5f, -1.0f, 0.0f);
+
   // --------------
 
   ShapePtr baseTabuleiro = Cube::Make();
@@ -209,6 +228,8 @@ static void initialize(void)
 
   ShapePtr cube = Cube::Make();
   Error::Check("after Cube::Make()");
+
+  ShapePtr cube3 = Cube::Make();
 
   // Lista de nós para o tabuleiro
   std::vector<NodePtr> chessboardNodes;
@@ -376,14 +397,56 @@ static void initialize(void)
   // state->SetTexture(sphere_tex);
   // clipPlane->Load(state); // Carregue o plano de corte no estado
 
-  // Objetos refletidos
+  // Objetos refletidos (abordagem on hold)
   tabuleiroNode = Node::Make(trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro});
+
+  // Criação do plano embaixo da plateia (teste de sombras)
+  TransformPtr trfAudienceFloor = Transform::Make();
+  trfAudienceFloor->Scale(10.0f, 2.0f, 10.0f);
+  trfAudienceFloor->Translate(1.0f, -2.0f, 0.0f);
+
+  AppearancePtr floorMaterial = Material::Make(1.0f, 1.0f, 1.0f, 1.0f);
+
+  ShapePtr floor = Cube::Make();
+  Error::Check("after Cube::Make()");
+
+  // NodePtr audienceFloorNode = Node::Make(trfAudienceFloor, {floorMaterial}, {floor});*/
+
+  /*// draw shadows on stencil
+  glEnable(GL_STENCIL_TEST);
+  glStencilFunc(GL_NEVER, 1, 0xFFFF);
+  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+  glm::mat4 sm = shadowMatrix(glm::vec4(0.0f, 1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 5.0f, 0.0f, 1.0f) /*:(light)*/
+  //);
+  // drawSphere(sm * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0)), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+  //  drawSphere(sm * glm::translate(glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f)), glm::vec3(2.5f, 1.5f, 2.0)), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+  //    draw floor with diffuse and specular light where stencil is not marked
+
+  /*glStencilFunc(GL_EQUAL, 0, 0xFFFF);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+  glBlendFunc(GL_ONE, GL_ONE);
+  glEnable(GL_BLEND);
+  glDepthFunc(GL_EQUAL);
+  // drawFloor(glm::mat4(1.0f), false);
+  glDepthFunc(GL_LESS);
+  glDisable(GL_STENCIL_TEST);
+  glDisable(GL_BLEND);
+
+  NodePtr shadowSphereNode = drawSphere(sm * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0)), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));*/
+
+  ShapePtr sombra1 = Sphere::Make();
+  TransformPtr trf_sombra1 = Transform::Make();
+  trf_sombra1->Translate(-1.4f, 0.02f, -1.0f);
+  glm::mat4 sm = shadowMatrix(glm::vec4(0.0f, 1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 5.0f, 0.0f, 1.0f));
+  trf_sombra1->MultMatrix(sm);
 
   // build scene
   NodePtr root = Node::Make(shader,
                             {
-                                // Tabuleiro
-                                // tabuleiroNode,
+
+                                // audienceFloorNode,
+                                //  Tabuleiro
+                                //  tabuleiroNode,
                                 /*
                                                                 // Casas do Tabuleiro
                                                                 Node::Make({white, matteGreen}, {chessboardNodes[0]}),
@@ -687,18 +750,10 @@ static void initialize(void)
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, /*{clipPlane},*/ {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shader}, trf1, {clipPlane}, {floor}));
-  reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
-}
-
-// Montagem da matriz de projeção (sombra)
-static glm::mat4 shadowMatrix(const glm::vec4 &n, const glm::vec4 &l)
-{
-  float ndotl = glm::dot(glm::vec3(n), glm::vec3(l));
-  return glm::mat4(
-      glm::vec4(ndotl + n.w - l.x * n.x, -l.y * n.x, -l.z * n.x, 0.0f),
-      glm::vec4(-l.x * n.y, ndotl + n.w - l.y * n.y, -l.z * n.y, 0.0f),
-      glm::vec4(-l.x * n.z, -l.y * n.z, ndotl + n.w - l.z * n.z, 0.0f),
-      glm::vec4(-l.x * n.w, -l.y * n.w, -l.z * n.w, ndotl));
+  /// reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
+  sombra = Scene::Make(Node::Make(shader, trf_sombra1, {white}, {sombra1}));
+  // chao = Scene::Make(Node::Make(shader, trfAudienceFloor, {floorMaterial}, {floor}));
+  chao = Scene::Make(Node::Make(shader, trfAudienceFloor, {matteGray}, {floor}));
 }
 
 static void display(GLFWwindow *win)
@@ -875,7 +930,6 @@ static void display(GLFWwindow *win)
   // ------
 
   glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  Error::Check("before render");
   glEnable(GL_STENCIL_TEST);
 
   // Floor
@@ -884,7 +938,7 @@ static void display(GLFWwindow *win)
   glStencilMask(0xFF);            // Write to stencil buffer
   glDepthMask(GL_FALSE);          // Don't write to depth buffer
   glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
-  reflector->Render(camera);
+  // reflector->Render(camera);
   glDisable(GL_CULL_FACE);
 
   // Cube reflection
@@ -910,23 +964,52 @@ static void display(GLFWwindow *win)
   root->SetTransform(nullptr);
   scene->Render(camera);
 
-  // draw shadows on stencil
-  glEnable(GL_STENCIL_TEST);
-  glStencilFunc(GL_NEVER, 1, 0xFFFF);
-  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-  glm::mat4 sm = shadowMatrix(glm::vec4(0.0f, 1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 5.0f, 0.0f, 1.0f) /*:(light)*/);
-  // drawSphere(sm * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0)), glm::vec4(1.0f, 0.0f, 0.0f, 0.0f));
-  // drawSphere(sm * glm::translate(glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f)), glm::vec3(2.5f, 1.5f, 2.0)), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
-  //  draw floor with diffuse and specular light where stencil is not marked
-  glStencilFunc(GL_EQUAL, 0, 0xFFFF);
-  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-  glBlendFunc(GL_ONE, GL_ONE);
-  glEnable(GL_BLEND);
-  glDepthFunc(GL_EQUAL);
-  // drawFloor(glm::mat4(1.0f), false);
-  glDepthFunc(GL_LESS);
-  glDisable(GL_STENCIL_TEST);
-  glDisable(GL_BLEND);
+  // ------
+  /*  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear window
+
+    // reflector
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_NEVER, 1, 0xFFFF);
+    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+    reflector->Render(camera);
+
+    glStencilFunc(GL_EQUAL, 1, 0xFFFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    NodePtr root = scene->GetRoot();
+    TransformPtr trf = Transform::Make();
+    trf->Scale(1.0f, -1.0f, 1.0f);
+    root->SetTransform(trf);
+    glFrontFace(GL_CW);
+    scene->Render(camera);
+    glDisable(GL_STENCIL_TEST);
+    glFrontFace(GL_CCW);
+    root->SetTransform(nullptr);
+    scene->Render(camera);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    reflector->Render(camera);
+    glDisable(GL_BLEND);*/
+
+  // glClearStencil(0);
+  // glClear(GL_STENCIL_BUFFER_BIT);
+
+  chao->Render(camera);
+
+  // glEnable(GL_STENCIL_TEST);
+  // glStencilFunc(GL_NEVER, 1, 0xFFFF);
+  // glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+
+  sombra->Render(camera);
+
+  // glStencilFunc(GL_EQUAL, 0, 0xFFFF);
+  // glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+  // glBlendFunc(GL_ONE, GL_ONE);
+  // glEnable(GL_BLEND);
+  // glDepthFunc(GL_EQUAL);
+
+  // glDepthFunc(GL_LESS);
+  // glDisable(GL_STENCIL_TEST);
+  // glDisable(GL_BLEND);
 }
 
 static void error(int code, const char *msg)
