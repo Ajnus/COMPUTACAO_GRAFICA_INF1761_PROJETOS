@@ -545,6 +545,7 @@ static void initialize(void)
                                 Node::Make(shd_tex, {Pawns[44]}),
                                 Node::Make(shd_tex, {Pawns[45]}),
                                 Node::Make(shd_tex, {Pawns[46]}),
+                                Node::Make(shd_tex, {Pawns[47]}),
 
                                 // Platéia (+ Sombras)
                                 Node::Make(shader, {audiencePawns[0]}),
@@ -814,7 +815,7 @@ static void initialize(void)
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, /*{clipPlane},*/ {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shader}, trf1, {clipPlane}, {floor}));
-  /// reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
+  reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
   // sombra = Scene::Make(Node::Make(shader, trf_sombra1, {white}, {sombra1}));
   //  chao = Scene::Make(Node::Make(shader, trfAudienceFloor, {floorMaterial}, {floor}));
   chao = Scene::Make(Node::Make(shader, trfAudienceFloor, {matteGray}, {floor}));
@@ -1002,7 +1003,7 @@ static void display(GLFWwindow *win)
   glStencilMask(0xFF);            // Write to stencil buffer
   glDepthMask(GL_FALSE);          // Don't write to depth buffer
   glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
-  // reflector->Render(camera);
+  reflector->Render(camera);
   glDisable(GL_CULL_FACE);
 
   // Cube reflection
