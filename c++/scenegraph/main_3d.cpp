@@ -690,6 +690,17 @@ static void initialize(void)
   reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
 }
 
+// Montagem da matriz de projeção (sombra)
+static glm::mat4 shadowMatrix(const glm::vec4 &n, const glm::vec4 &l)
+{
+  float ndotl = glm::dot(glm::vec3(n), glm::vec3(l));
+  return glm::mat4(
+      glm::vec4(ndotl + n.w - l.x * n.x, -l.y * n.x, -l.z * n.x, 0.0f),
+      glm::vec4(-l.x * n.y, ndotl + n.w - l.y * n.y, -l.z * n.y, 0.0f),
+      glm::vec4(-l.x * n.z, -l.y * n.z, ndotl + n.w - l.z * n.z, 0.0f),
+      glm::vec4(-l.x * n.w, -l.y * n.w, -l.z * n.w, ndotl));
+}
+
 static void display(GLFWwindow *win)
 {
   /*glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -898,6 +909,24 @@ static void display(GLFWwindow *win)
 
   root->SetTransform(nullptr);
   scene->Render(camera);
+
+  // draw shadows on stencil
+  glEnable(GL_STENCIL_TEST);
+  glStencilFunc(GL_NEVER, 1, 0xFFFF);
+  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+  glm::mat4 sm = shadowMatrix(glm::vec4(0.0f, 1.0f, 0.0f, 0.0f), glm::vec4(0.0f, 5.0f, 0.0f, 1.0f) /*:(light)*/);
+  // drawSphere(sm * glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 1.0f, 0.0)), glm::vec4(1.0f, 0.0f, 0.0f, 0.0f));
+  // drawSphere(sm * glm::translate(glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f)), glm::vec3(2.5f, 1.5f, 2.0)), glm::vec4(0.0f, 1.0f, 0.0f, 0.0f));
+  //  draw floor with diffuse and specular light where stencil is not marked
+  glStencilFunc(GL_EQUAL, 0, 0xFFFF);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+  glBlendFunc(GL_ONE, GL_ONE);
+  glEnable(GL_BLEND);
+  glDepthFunc(GL_EQUAL);
+  // drawFloor(glm::mat4(1.0f), false);
+  glDepthFunc(GL_LESS);
+  glDisable(GL_STENCIL_TEST);
+  glDisable(GL_BLEND);
 }
 
 static void error(int code, const char *msg)
