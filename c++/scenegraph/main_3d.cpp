@@ -86,6 +86,7 @@ static void initialize(void)
   AppearancePtr sphere_tex = Texture::Make("decal", "../../images/FIDE_DOUBLE.png");
   AppearancePtr wood_tex = Texture::Make("decal", "../../images/wood.jpg");
   AppearancePtr clock_tex = Texture::Make("decal", "../../images/clock.png");
+  AppearancePtr noise_tex = Texture::Make("decal", "../../images/noise.png");
 
   // --------------
 
@@ -686,7 +687,7 @@ static void initialize(void)
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, /*{clipPlane},*/ {baseTabuleiro}));
   // reflector = Scene::Make(Node::Make({shader}, trf1, {clipPlane}, {floor}));
-  reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, {clipPlane}, {cube}));
+  reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, /*{noise_tex, clipPlane},*/ {cube}));
 }
 
 static void display(GLFWwindow *win)
