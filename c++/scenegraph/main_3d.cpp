@@ -156,7 +156,7 @@ static void initialize(void)
   trfSwitchButtonBlackBottomCap->Rotate(90.0f, 1.0f, 0.0f, 0.0f);
 
   TransformPtr trf_floor = Transform::Make();
-  trf_floor->Scale(8.0f, -1.1f, 3.0f);
+  trf_floor->Scale(8.0f, 0.0f, 3.0f);
   // trf_floor->Translate(0.0f,-1.0f,0.0f);
 
   // --------------
@@ -382,48 +382,48 @@ static void initialize(void)
   NodePtr root = Node::Make(shader,
                             {
                                 // Tabuleiro
-                                tabuleiroNode,
+                                // tabuleiroNode,
+                                /*
+                                                                // Casas do Tabuleiro
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[0]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[1]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[2]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[3]}),
 
-                                // Casas do Tabuleiro
-                                Node::Make({white, matteGreen}, {chessboardNodes[0]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[1]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[2]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[3]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[4]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[5]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[6]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[7]}),
 
-                                Node::Make({white, matteGreen}, {chessboardNodes[4]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[5]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[6]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[7]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[8]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[9]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[10]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[11]}),
 
-                                Node::Make({white, matteGreen}, {chessboardNodes[8]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[9]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[10]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[11]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[12]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[13]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[14]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[15]}),
 
-                                Node::Make({white, matteGreen}, {chessboardNodes[12]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[13]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[14]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[15]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[16]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[17]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[18]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[19]}),
 
-                                Node::Make({white, matteGreen}, {chessboardNodes[16]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[17]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[18]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[19]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[20]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[21]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[22]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[23]}),
 
-                                Node::Make({white, matteGreen}, {chessboardNodes[20]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[21]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[22]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[23]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[24]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[25]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[26]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[27]}),
 
-                                Node::Make({white, matteGreen}, {chessboardNodes[24]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[25]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[26]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[27]}),
-
-                                Node::Make({white, matteGreen}, {chessboardNodes[28]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[29]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[30]}),
-                                Node::Make({white, matteGreen}, {chessboardNodes[31]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[28]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[29]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[30]}),
+                                                                Node::Make({white, matteGreen}, {chessboardNodes[31]}),*/
 
                                 // Peão cheio de 3 em 3, 1 nó para cada peão gerava transformações inadequadas
                                 // Peões brancos
@@ -684,7 +684,9 @@ static void initialize(void)
   scene = Scene::Make(root);
   // reflector = Scene::Make(Node::Make({scene_reflect}, trf_floor, /*{clipplane},*/ {cube}));
   // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro}));
-  reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, {clipPlane}, {baseTabuleiro}));
+  // reflector = Scene::Make(Node::Make({shd_reflect}, trfBaseTabuleiro, /*{clipPlane},*/ {baseTabuleiro}));
+  // reflector = Scene::Make(Node::Make({shader}, trf1, {clipPlane}, {floor}));
+  reflector = Scene::Make(Node::Make(shd_reflect, trf_floor, {clipPlane}, {cube}));
 }
 
 static void display(GLFWwindow *win)
@@ -800,25 +802,101 @@ static void display(GLFWwindow *win)
 
   // ----
 
+  /*
+  algoritmo simples
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
   // desenha cena refletida
   NodePtr root = scene->GetRoot();
   TransformPtr trf = Transform::Make();
   trf->Scale(1.0f, -1.0f, 1.0f);
   root->SetTransform(trf);
-  glFrontFace(GL_CW);
-  // invert front face incidence
+  glFrontFace(GL_CW);         // invert front face incidence
   scene->Render(camera);
-  glFrontFace(GL_CCW);
-  // restore front face incidence
+  glFrontFace(GL_CCW);        // restore front face incidence
   root->SetTransform(nullptr);
+
   // desenha cena
   scene->Render(camera);
+
   // desenha refletor
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   reflector->Render(camera);
-  glDisable(GL_BLEND);
+  glDisable(GL_BLEND);*/
+
+  // ------
+
+  /*  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // desenha refletor no stencil
+    glEnable(GL_STENCIL_TEST);
+
+    glStencilFunc(GL_NEVER, 1, 0xFF);
+    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+    reflector->Render(camera);
+
+    // desenha cena refletida
+    NodePtr root = scene->GetRoot();
+    TransformPtr trf = Transform::Make();
+    trf->Scale(1.0f, -1.0f, 1.0f);
+    root->SetTransform(trf);
+    glFrontFace(GL_CW); // invert front face incidence
+    scene->Render(camera);
+    glFrontFace(GL_CCW); // restore front face incidence
+    root->SetTransform(nullptr);
+
+    glStencilFunc(GL_EQUAL, 1, 0xFFFF);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+    // código para desenho da cena refletida
+    glDisable(GL_STENCIL_TEST);
+
+    // desenha cena
+    scene->Render(camera);
+
+    // desenha refletor
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    reflector->Render(camera);
+    glDisable(GL_BLEND);*/
+
+  // ------
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  Error::Check("before render");
+  glEnable(GL_STENCIL_TEST);
+
+  // Floor
+  glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
+  glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+  glStencilMask(0xFF);            // Write to stencil buffer
+  glDepthMask(GL_FALSE);          // Don't write to depth buffer
+  glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
+  reflector->Render(camera);
+  glDisable(GL_CULL_FACE);
+
+  // Cube reflection
+  // glEnable(GL_CULL_FACE);
+  glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
+  glStencilMask(0x00);              // Don't write anything to stencil buffer
+  glDepthMask(GL_TRUE);             // Write to depth buffer
+  NodePtr root = scene->GetRoot();
+  TransformPtr trf = Transform::Make();
+  trf->Scale(1.0f, -1.0f, 1.0f);
+  root->SetTransform(trf);
+  glFrontFace(GL_CW);
+
+  scene->Render(camera);
+  glFrontFace(GL_CCW); // restore front face incidence
+  root->SetTransform(nullptr);
+
+  glStencilFunc(GL_EQUAL, 1, 0xFFFF);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
+  glDisable(GL_STENCIL_TEST);
+
+  root->SetTransform(nullptr);
+  scene->Render(camera);
 }
 
 static void error(int code, const char *msg)
