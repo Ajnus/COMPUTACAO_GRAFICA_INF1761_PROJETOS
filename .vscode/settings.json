@@ -6,6 +6,7 @@
         "*.tcc": "cpp",
         "format": "cpp",
         "limits": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "iostream": "cpp"
     }
 }
