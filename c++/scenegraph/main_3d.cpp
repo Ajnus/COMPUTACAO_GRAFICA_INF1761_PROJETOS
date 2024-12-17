@@ -176,10 +176,6 @@ static void initialize(void)
   trf_floor->Scale(8.0f, 0.0f, 3.0f);
   // trf_floor->Translate(0.0f,-1.0f,0.0f);
 
-  TransformPtr trf4 = Transform::Make();
-  trf4->Scale(3.0f, 0.001f, 3.0f);
-  trf4->Translate(-0.5f, -1.0f, 0.0f);
-
   // --------------
 
   ShapePtr baseTabuleiro = Cube::Make();
@@ -228,9 +224,6 @@ static void initialize(void)
   Error::Check("after Disk::Make()");
 
   ShapePtr cube = Cube::Make();
-  Error::Check("after Cube::Make()");
-
-  ShapePtr cube3 = Cube::Make();
   Error::Check("after Cube::Make()");
 
   // Lista de nós para o tabuleiro
@@ -401,12 +394,6 @@ static void initialize(void)
   // Plano de Corte
   ClipPlanePtr clipPlane = ClipPlane::Make("clipPlane", 1.0f, 0.0f, 0.0f, 0.0f);
   // clipPlane->AddPlane
-
-  // Configure o estado
-  // StatePtr state = State::Make(camera);
-  // state->PushShader(shd_clip);
-  // state->SetTexture(sphere_tex);
-  // clipPlane->Load(state); // Carregue o plano de corte no estado
 
   // Objetos refletidos (abordagem on hold)
   tabuleiroNode = Node::Make(trfBaseTabuleiro, {white, matteGray}, {baseTabuleiro});
@@ -742,7 +729,7 @@ static void initialize(void)
                                 Node::Make(shd_tex, {audiencePawns[184]}),
                                 Node::Make(shd_tex, {audiencePawns[185]}),
                                 Node::Make(shd_tex, {audiencePawns[186]}),
-                                // Node::Make(shader, {audiencePawns[187]}),
+                                Node::Make(shader, {audiencePawns[187]}),
                                 Node::Make(shd_tex, {audiencePawns[188]}),
                                 Node::Make(shd_tex, {audiencePawns[189]}),
                                 Node::Make(shd_tex, {audiencePawns[190]}),
@@ -1001,126 +988,54 @@ static void display(GLFWwindow *win)
 
   // ------
 
-  /*  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_STENCIL_TEST);
-
-    // Floor
-    glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
-    glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-    glStencilMask(0xFF);            // Write to stencil buffer
-    glDepthMask(GL_FALSE);          // Don't write to depth buffer
-    glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
-    reflector->Render(camera);
-    glDisable(GL_CULL_FACE);
-
-    // Cube reflection
-    // glEnable(GL_CULL_FACE);
-    glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
-    glStencilMask(0x00);              // Don't write anything to stencil buffer
-    glDepthMask(GL_TRUE);             // Write to depth buffer
-    NodePtr root = scene->GetRoot();
-    TransformPtr trf = Transform::Make();
-    trf->Scale(1.0f, -1.0f, 1.0f);
-    root->SetTransform(trf);
-    glFrontFace(GL_CW);
-
-    scene->Render(camera);
-    glFrontFace(GL_CCW); // restore front face incidence
-    root->SetTransform(nullptr);
-
-    glStencilFunc(GL_EQUAL, 1, 0xFFFF);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-
-    glDisable(GL_STENCIL_TEST);
-
-    root->SetTransform(nullptr);
-    scene->Render(camera);
-  */
-  // ------
-  /*  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear window
-
-    // reflector
-    glEnable(GL_STENCIL_TEST);
-    glStencilFunc(GL_NEVER, 1, 0xFFFF);
-    glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-    reflector->Render(camera);
-
-    glStencilFunc(GL_EQUAL, 1, 0xFFFF);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-    NodePtr root = scene->GetRoot();
-    TransformPtr trf = Transform::Make();
-    trf->Scale(1.0f, -1.0f, 1.0f);
-    root->SetTransform(trf);
-    glFrontFace(GL_CW);
-    scene->Render(camera);
-    glDisable(GL_STENCIL_TEST);
-    glFrontFace(GL_CCW);
-    root->SetTransform(nullptr);
-    scene->Render(camera);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    reflector->Render(camera);
-    glDisable(GL_BLEND);*/
-
-  // glClearStencil(0);
-  // glClear(GL_STENCIL_BUFFER_BIT);
-
-  // chao->Render(camera);
-
-  // glEnable(GL_STENCIL_TEST);
-  // glStencilFunc(GL_NEVER, 1, 0xFFFF);
-  // glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-
-  // sombra->Render(camera);
-
-  // glStencilFunc(GL_EQUAL, 0, 0xFFFF);
-  // glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-  // glBlendFunc(GL_ONE, GL_ONE);
-  // glEnable(GL_BLEND);
-  // glDepthFunc(GL_EQUAL);
-
-  // glDepthFunc(GL_LESS);
-  // glDisable(GL_STENCIL_TEST);
-  // glDisable(GL_BLEND);
-
-  // ------
-
-  glClearStencil(0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT); // clear window
-
-  // reflector
+  glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_STENCIL_TEST);
-  glStencilFunc(GL_NEVER, 1, 0xFFFF);
-  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-  reflector->Render(camera);
 
-  glStencilFunc(GL_EQUAL, 1, 0xFFFF);
-  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+  // Floor
+  glStencilFunc(GL_ALWAYS, 1, 0xFF); // Set any stencil to 1
+  glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+  glStencilMask(0xFF);            // Write to stencil buffer
+  glDepthMask(GL_FALSE);          // Don't write to depth buffer
+  glClear(GL_STENCIL_BUFFER_BIT); // Clear stencil buffer (0 by default)
+  reflector->Render(camera);
+  glDisable(GL_CULL_FACE);
+
+  // Reflection
+  // glEnable(GL_CULL_FACE);
+  glStencilFunc(GL_EQUAL, 1, 0xFF); // Pass test if stencil value is 1
+  glStencilMask(0x00);              // Don't write anything to stencil buffer
+  glDepthMask(GL_TRUE);             // Write to depth buffer
   NodePtr root = scene->GetRoot();
   TransformPtr trf = Transform::Make();
   trf->Scale(1.0f, -1.0f, 1.0f);
   root->SetTransform(trf);
   glFrontFace(GL_CW);
+
   scene->Render(camera);
+  glFrontFace(GL_CCW); // restore front face incidence
+  root->SetTransform(nullptr);
+
+  glStencilFunc(GL_EQUAL, 1, 0xFF);
+  glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+
   glDisable(GL_STENCIL_TEST);
-  glFrontFace(GL_CCW);
+
   root->SetTransform(nullptr);
   scene->Render(camera);
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  reflector->Render(camera);
-  glDisable(GL_BLEND);
 
+  chao->Render(camera); // se chamado antes do algoritmo de sombra, o chão é renderizado
+
+  // reseta o stencil buffer utilizado acima
   glClearStencil(0);
   glClear(GL_STENCIL_BUFFER_BIT);
 
-  glEnable(GL_STENCIL_TEST);
-  glStencilFunc(GL_NEVER, 1, 0xFFFF);
-  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
-
   sombra->Render(camera);
 
-  glStencilFunc(GL_EQUAL, 0, 0xFFFF);
+  glEnable(GL_STENCIL_TEST);
+  glStencilFunc(GL_NEVER, 1, 0xFF);
+  glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+
+  glStencilFunc(GL_EQUAL, 0, 0xFF);
   glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
   glBlendFunc(GL_ONE, GL_ONE);
   glEnable(GL_BLEND);
@@ -1128,8 +1043,8 @@ static void display(GLFWwindow *win)
 
   chao->Render(camera);
 
-  glDisable(GL_STENCIL_TEST);
   glDepthFunc(GL_LESS);
+  glDisable(GL_STENCIL_TEST);
   glDisable(GL_BLEND);
 }
 
@@ -1222,10 +1137,10 @@ int main()
   if (mode)
   // Set the window position to cover the entire width of the monitor
   {
-    int windowWidth = 600;  // mode->width / 2;
-    int windowHeight = 400; // 565;
-    int xpos = mode->width / 2 + 45;
-    int ypos = (mode->height - windowHeight) / 2 - 77;
+    int windowWidth = mode->width;
+    int windowHeight = 565;
+    int xpos = 0;
+    int ypos = (mode->height - windowHeight) / 2 - 115;
     glfwSetWindowPos(win, xpos, ypos);
     glfwSetWindowSize(win, windowWidth, windowHeight);
   }
