@@ -742,7 +742,7 @@ static void initialize(void)
                                 Node::Make(shd_tex, {audiencePawns[184]}),
                                 Node::Make(shd_tex, {audiencePawns[185]}),
                                 Node::Make(shd_tex, {audiencePawns[186]}),
-                                Node::Make(shader, {audiencePawns[187]}),
+                                // Node::Make(shader, {audiencePawns[187]}),
                                 Node::Make(shd_tex, {audiencePawns[188]}),
                                 Node::Make(shd_tex, {audiencePawns[189]}),
                                 Node::Make(shd_tex, {audiencePawns[190]}),
